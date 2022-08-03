@@ -231,9 +231,9 @@ public class ProjectConfiguration extends HttpServlet {
             applicationUser
         );
         //temporary workaround
-        if (!hasPermissions && applicationUser.getEmailAddress().equals("andreyp@playtika.com")) {
-            hasPermissions = true;
-        }
+        //if (!hasPermissions && applicationUser.getEmailAddress().equals("andreyp@playtika.com")) {
+        //    hasPermissions = true;
+        //}
         if (!hasPermissions) {
             StatusText.getInstance().add(true, "The current user has no rights to change the project " + projectKey);
             return null;
