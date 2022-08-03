@@ -170,7 +170,7 @@ public class ProjectMonitoringMisc {
         Status issueStatus = issue.getStatus();
         StatusCategory statusCategory = issueStatus.getStatusCategory();
         //return (Objects.equals(issueStatus.getName(), "Closed") || Objects.equals(issueStatus.getName(), "Done"));
-        return (Objects.equals(issueStatus.getName(), StatusCategory.COMPLETE));
+        return (Objects.equals(issueStatus.getStatusCategory().getName(), StatusCategory.COMPLETE));
     }
 
     public boolean isIssueOpen(Issue issue) {
