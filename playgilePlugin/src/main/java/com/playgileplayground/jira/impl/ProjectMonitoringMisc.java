@@ -10,6 +10,7 @@ import com.playgileplayground.jira.jiraissues.PlaygileIssue;
 import com.playgileplayground.jira.jiraissues.PlaygileSprint;
 import com.playgileplayground.jira.jiraissues.SprintState;
 
+import java.io.Console;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.*;
@@ -168,8 +169,7 @@ public class ProjectMonitoringMisc {
 
     public boolean isIssueCompleted(Issue issue) {
         Status issueStatus = issue.getStatus();
-        StatusCategory statusCategory = issueStatus.getStatusCategory();
-        return (Objects.equals(issueStatus.getName(), "Closed") || Objects.equals(issueStatus.getName(), "Done"));
+        return (Objects.equals(issueStatus.getStatusCategory().getKey(), StatusCategory.COMPLETE));
     }
 
     public boolean isIssueOpen(Issue issue) {
