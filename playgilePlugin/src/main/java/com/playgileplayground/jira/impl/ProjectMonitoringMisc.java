@@ -10,6 +10,7 @@ import com.playgileplayground.jira.jiraissues.PlaygileIssue;
 import com.playgileplayground.jira.jiraissues.PlaygileSprint;
 import com.playgileplayground.jira.jiraissues.SprintState;
 
+import java.io.Console;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.*;
