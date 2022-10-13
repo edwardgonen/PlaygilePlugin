@@ -1200,7 +1200,7 @@
                                 })()
                                 var jqlProjectParam = featureData.isProjectIssues ? ` and project=${PROJECT_NAME}` : ''
                                 var bugInclude = featureData.viewType.toLowerCase() === 'epic' ? 'Bug,' : ''
-                                window.open(`${BASE_URL}/issues/?jql=(issueFunction in issuesInEpics("issuekey = ${featureData.key}") OR issueFunction in issuesInEpics("issueFunction in linkedIssuesOf(\\"issuekey = ${featureData.key}\\", \\"Is Parent task of:\\")")) and issuetype in (Story, Task, "Tech Story", ${bugInclude} Research, "Technical Debt") and status not in (Cancelled, Go-Live, "On Hold", Closed, Done) ${storyPointsCondition} ${jqlProjectParam}`)
+                                window.open(`${BASE_URL}/issues/?jql=(issueFunction in issuesInEpics("issuekey = ${featureData.key}") OR issueFunction in issuesInEpics("issueFunction in linkedIssuesOf(\\"issuekey = ${featureData.key}\\", \\"is parent of\\")")) and issuetype in (Story, Task, "Tech Story", ${bugInclude} Research, "Technical Debt") and status not in (Cancelled, Go-Live, "On Hold", Closed, Done) ${storyPointsCondition} ${jqlProjectParam}`)
                             }
                         });
                         chartIssueDistributionPie.draw(dataIssueDistribution, optionsIssueDistribution);

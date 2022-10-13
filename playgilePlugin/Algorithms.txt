@@ -1,6 +1,6 @@
 ================================ Project preparation algorithm ----------------------------------
 
-1. Get list of roadmap features that not Cancelled and not Go-Live not Closed not done not Resolved (project="PK Features" AND issuetype="Roadmap Feature" and issueLinkType="Is Parent task of:" AND Status!=Done AND Status!=Resolved)
+1. Get list of roadmap features that not Cancelled and not Go-Live not Closed not done not Resolved (project="PK Features" AND issuetype="Roadmap Feature" and issueLinkType="is parent of" AND Status!=Done AND Status!=Resolved)
 2. for each RF:
    1. Get query issuefunction in linkedIssuesOf('id=PKP-85')
       This will give a list of product-related linked issues. Monetization(PKM), BI(BIT), BA(PKBA), Economics (PKEC) tasks - those names should appear in the Key of issue
@@ -70,7 +70,7 @@
            if (Jira version > 7.x ) && //for production jira versin is > 7. Needed for backward compatibility
                It is not Board King project //temporary limitation because of something with BK project
                then
-                    query = "issueFunction in linkedIssuesOf(\"issueKey=" + roadmapFeature.getKey() + "\",\"Is Parent task of:\")";
+                    query = "issueFunction in linkedIssuesOf(\"issueKey=" + roadmapFeature.getKey() + "\",\"is parent of\")";
            else //old form for dev jira environment and BK
                     searchString = "issue in linkedIssues(\""  + roadmapFeature.getKey() +  "\")";
 

@@ -129,19 +129,19 @@ public class JiraInterface {
         /*
         if (viewType.equals(ProjectMonitor.ROADMAPFEATUREKEY)) {
             if (!jiraVersion.startsWith("7.")) //higher than 7
-                searchString = "project = " + currentProject.getKey() + " AND issueFunction in linkedIssuesOf(\"issueKey=" + roadmapFeature.getKey() + "\",\"Is Parent task of:\")";
+                searchString = "project = " + currentProject.getKey() + " AND issueFunction in linkedIssuesOf(\"issueKey=" + roadmapFeature.getKey() + "\",\"is parent of\")";
             else searchString = "project = " + currentProject.getKey() + " AND issue in linkedIssues(\"" + roadmapFeature.getKey() + "\")";
             //as asked by Dima Gil - don't count not needed epic links
-            // issueFunction in linkedIssuesOf("issuekey = BINGOBLITZ-119252","Is Parent task of:")
+            // issueFunction in linkedIssuesOf("issuekey = BINGOBLITZ-119252","is parent of")
         } else {
                 searchString = "project = " + currentProject.getKey() + " AND issuetype = " + viewType;
         }
         */
 
         if (configuration.getViewType().equals(ViewTypes.ROADMAP_FEATURE)) {
-            searchString = "issueFunction in linkedIssuesOf(\"issueKey=" + roadmapFeature.getKey() + "\", \"Is Parent task of:\") and issuetype = Epic";
+            searchString = "issueFunction in linkedIssuesOf(\"issueKey=" + roadmapFeature.getKey() + "\", \"is parent of\") and issuetype = Epic";
             //as asked by Dima Gil - don't count not needed epic links
-            // issueFunction in linkedIssuesOf("issuekey = BINGOBLITZ-119252","Is Parent task of:")
+            // issueFunction in linkedIssuesOf("issuekey = BINGOBLITZ-119252","is parent of")
         } else {
             searchString = "issueFunction in issuesInEpics(\"issuekey=" + roadmapFeature.getKey() + "\")";
         }
@@ -223,7 +223,7 @@ public class JiraInterface {
 
     public ArrayList<Issue> getRoadmapFeaturesInPreparationPhase(Project currentProject, String featureKey) {
         Query query;
-        //project="PK Features" AND issuetype="Roadmap Feature" and issueLinkType="Is Parent task of:" AND Status!=Done AND Status!=Resolved AND Status!=Closed
+        //project="PK Features" AND issuetype="Roadmap Feature" and issueLinkType="is parent of" AND Status!=Done AND Status!=Resolved AND Status!=Closed
 
         String searchString;
 
