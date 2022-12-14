@@ -9,3 +9,14 @@ Here are the SDK commands you'll use immediately:
 Full documentation is always available at:
 
 https://developer.atlassian.com/display/DOCS/Introduction+to+the+Atlassian+Plugin+SDK
+
+
+New things for WSOP
+
+1. Graph of backlog story points should be with Sprints on axe X
+2. Graph of committed vs delivered per sprint.
+
+
+projectKey=WSOP&view=reporting&chart=sprintRetrospective&sprint=43220
+JQL is sprint=43220 and project = wsop and sprint in closedSprints()
+
