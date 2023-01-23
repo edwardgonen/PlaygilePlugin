@@ -34,10 +34,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Optional;
+import java.util.*;
 
 @Scanned
 public class GetAnalyzedFeature extends HttpServlet {
@@ -193,7 +190,7 @@ class GetAnalyzedFeatureResponse {
     public ArrayList<ProgressDataSet> progressDataSets;
     public ArrayList<VelocitiesDataSet> velocityDataSets;
     public ArrayList<IssueCountsDataSet> issueCountsDataSets;
-
+    public List<SprintsStatisticDataSet> sprintsStatisticDataSets;
     public void fillTheFields(RoadmapFeatureAnalysis roadmapFeatureAnalysis) {
         summary = roadmapFeatureAnalysis.featureSummary;
         key = roadmapFeatureAnalysis.featureKey;
@@ -220,7 +217,7 @@ class GetAnalyzedFeatureResponse {
 
         velocityDataSets = getRealInterpolatedVelocities(roadmapFeatureAnalysis.artificialTimeWindowsForVelocityCalculation,
             roadmapFeatureAnalysis.interpolatedVelocityPoints);
-
+        sprintsStatisticDataSets = roadmapFeatureAnalysis != null ? roadmapFeatureAnalysis.getSprintsStatisticDataSets() : Collections.emptyList();
         issueCountsDataSets = getHistoricalIssuesCounts(roadmapFeatureAnalysis.historicalDateAndValues);
         isProjectIssues = roadmapFeatureAnalysis.config.isProjectTickets();
         groupBy = roadmapFeatureAnalysis.groupBy;

@@ -15,7 +15,7 @@ import com.playgileplayground.jira.persistence.ManageActiveObjectsResult;
 import com.playgileplayground.jira.projectprogress.DateAndValues;
 import com.playgileplayground.jira.projectprogress.ProjectProgress;
 import com.playgileplayground.jira.projectprogress.ProjectProgressResult;
-
+import com.playgileplayground.jira.servlet.SprintsStatisticDataSet;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -64,7 +64,7 @@ public class RoadmapFeatureAnalysis implements Comparator<RoadmapFeatureAnalysis
     public Date targetDate;
     public String teamName;
     public String groupBy;
-
+    private List<SprintsStatisticDataSet> sprintsStatisticDataSets;
     public RoadmapFeatureAnalysis(
         Issue roadmapFeature,
         JiraInterface jiraInterface,
@@ -90,7 +90,13 @@ public class RoadmapFeatureAnalysis implements Comparator<RoadmapFeatureAnalysis
         teamName = "";
         groupBy = "";
     }
+    public List<SprintsStatisticDataSet> getSprintsStatisticDataSets() {
+        return sprintsStatisticDataSets;
+    }
 
+    public void setSprintsStatisticDataSets(List<SprintsStatisticDataSet> sprintsStatisticDataSets) {
+        this.sprintsStatisticDataSets = sprintsStatisticDataSets;
+    }
     @Override
     public int compareTo(RoadmapFeatureAnalysis o) {
         return featureSummary.compareTo(o.featureSummary);
@@ -184,6 +190,7 @@ public class RoadmapFeatureAnalysis implements Comparator<RoadmapFeatureAnalysis
                 for (int i = 0; i < overallIssuesDistributionInSprint.length; i++) {
                     overallIssuesDistributionInSprint[i] += sprintIssuesDistribution[i];
                 }
+                getSprintStatistic(notFutureSprint);
             }
             //now average it across all sprints
             if (playgileSprints.size() > 0) {
@@ -273,7 +280,29 @@ public class RoadmapFeatureAnalysis implements Comparator<RoadmapFeatureAnalysis
         bRoadmapFeatureAnalyzed = result; //set to true if analyzed ok
         return result;
     }
-
+    private void getSprintStatistic(PlaygileSprint sprint) {
+        if(sprintsStatisticDataSets == null) {
+            sprintsStatisticDataSets = new ArrayList<>();
+        }
+        SprintsStatisticDataSet stats = new SprintsStatisticDataSet();
+        stats.setName(sprint.getName());
+        stats.setActivatedDate(sprint.getActivatedDate());
+        stats.setCompleteDate(sprint.getCompleteDate());
+        int countCompleted = 0;
+        int countUncompleted = 0;
+        for (Issue issue : jiraInterface.getIssuesBySprintId(sprint.getId())) {
+            if (issue.getResolutionDate() == null) {
+                countUncompleted++;
+            } else if (issue.getResolutionDate().before(sprint.getCompleteDate()) && issue.getResolutionDate().after(sprint.getActivatedDate())) {
+                countCompleted++;
+            } else {
+                countUncompleted++;
+            }
+        }
+        stats.setCompletedIssuesInSprintNumber(countCompleted);
+        stats.setUncompletedIssuesInSprintNumber(countUncompleted);
+        sprintsStatisticDataSets.add(stats);
+    }
     private ArrayList<DateAndValues> getHistoricalEstimations() {
         ArrayList<DateAndValues> result = null;
         ManageActiveObjectsResult maor = mao.GetProgressDataList(new ManageActiveObjectsEntityKey(projectKey, featureKey));

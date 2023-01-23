@@ -426,7 +426,22 @@ public class JiraInterface {
 
         return tasks;
     }
-
+    public List<Issue> getIssuesBySprintId(Long sprintID) {
+        if (sprintID == null) return null;
+        String searchString = "sprint=" + sprintID;
+        SearchResults searchResults = getSearchResult(searchString);
+        List<Issue> issues = null;
+        if (searchResults != null) {
+            StatusText.getInstance().add(true, "Accessing list of issues for " + sprintID);
+            issues = this.AccessVersionIndependentListOfIssues(searchResults);
+            if (issues == null || issues.size() == 0) {
+                StatusText.getInstance().add(true, "Returned no tasks for " + sprintID);
+            }
+        } else {
+            StatusText.getInstance().add(true, "Search result is null for " + sprintID);
+        }
+        return issues;
+    }
     private SearchResults getSearchResult(String searchString) {
         JqlQueryParser jqlQueryParser = ComponentAccessor.getComponent(JqlQueryParser.class);
         Query query;
