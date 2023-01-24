@@ -291,12 +291,14 @@ public class RoadmapFeatureAnalysis implements Comparator<RoadmapFeatureAnalysis
         int countCompleted = 0;
         int countUncompleted = 0;
         for (Issue issue : jiraInterface.getIssuesBySprintId(sprint.getId())) {
-            if (issue.getResolutionDate() == null) {
-                countUncompleted++;
-            } else if (issue.getResolutionDate().before(sprint.getCompleteDate()) && issue.getResolutionDate().after(sprint.getActivatedDate())) {
-                countCompleted++;
-            } else {
-                countUncompleted++;
+            if (sprint.getCompleteDate() != null && sprint.getActivatedDate() != null) {
+                if (issue.getResolutionDate() == null) {
+                    countUncompleted++;
+                } else if (issue.getResolutionDate().before(sprint.getCompleteDate()) && issue.getResolutionDate().after(sprint.getActivatedDate())) {
+                    countCompleted++;
+                } else {
+                    countUncompleted++;
+                }
             }
         }
         stats.setCompletedIssuesInSprintNumber(countCompleted);
