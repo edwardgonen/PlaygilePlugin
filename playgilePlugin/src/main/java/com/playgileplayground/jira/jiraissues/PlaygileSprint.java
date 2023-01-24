@@ -31,6 +31,7 @@ public class PlaygileSprint implements Comparator<PlaygileSprint>, Comparable<Pl
     private String name = "";
     private Date startDate = new Date();
     private Date endDate = new Date();
+    private Date activatedDate = new Date();
     private Date completeDate = new Date();
     private long sequence;
     private String goal = "";
@@ -125,6 +126,7 @@ public class PlaygileSprint implements Comparator<PlaygileSprint>, Comparable<Pl
         return endDate;
     }
     public void setEndDate(Date date) { endDate = date; }
+    public Date getActivatedDate() { return activatedDate; }
 
     public Date getCompleteDate() {
         return completeDate;
@@ -202,6 +204,16 @@ public class PlaygileSprint implements Comparator<PlaygileSprint>, Comparable<Pl
                 catch (Exception ex)
                 {
                     endDate = null;
+                }
+                break;
+            case "activatedDate":
+                try
+                {
+                    activatedDate = new DateTime(value).toDate();
+                }
+                catch (Exception ex)
+                {
+                    activatedDate = null;
                 }
                 break;
             case "completeDate":
